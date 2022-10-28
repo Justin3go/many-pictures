@@ -1,43 +1,41 @@
 <template>
+	<div class="demo" style="height: 900px"></div>
 	<div>
-		<many-pictures :srcImgs="srcImgs" :lazy="true" />
+		<many-pictures :srcImgs="beijing[0]" :lazy="true" />
 	</div>
 </template>
 <script lang="ts" setup>
-// import manyPictures from "many-pictures";
-import { reactive } from "vue";
+// 返回补位0序号
+function numGenerator(max: number, width: number): string[] {
+	const res: string[] = [];
+	for (let i = 1; i <= max; i++) {
+		const item = i.toString();
+		const sub = width - item.length;
+		if (sub > 0) {
+			res.push(`${"0".repeat(sub)}${item}`);
+		}
+	}
+	return res;
+}
 
-const base = "https://oss.justin3go.com/photography/";
-const srcImgs = reactive([
-	{
-		title: "故宫",
-		description: "some description",
-		link: `${base}47d03d9595af438bf63faad67d87e09.jpg`,
-	},
-	{
-		title: "故宫",
-		description: "some description",
-		link: `${base}47f61b6a606c72122399861b7cb523e.jpg`,
-	},
-	{
-		title: "故宫",
-		description: "some description",
-		link: `${base}596496e209caf88d1580a1e27779728.jpg`,
-	},
-	{
-		title: "故宫",
-		description: "some description",
-		link: `${base}799af92418066c549c0b6103fc7bf83.jpg`,
-	},
-	{
-		title: "故宫",
-		description: "some description",
-		link: `${base}97282cb511d990137566527350c01e9.jpg`,
-	},
-	{
-		title: "故宫",
-		description: "some description",
-		link: `${base}9c01f6f36fad0f3ba9f68c9f0bdb8f1.jpg`,
-	},
-]);
+const baseURL = "https://oss.justin3go.com/摄影/";
+const beijing = [
+	numGenerator(4, 3).map((item) => ({
+		title: "八达岭",
+		description: "八达岭长城+熊",
+		link: `${baseURL}北京/北京_八达岭${item}.jpg`,
+	})),
+	numGenerator(15, 3).map((item) => ({
+		title: "八达岭",
+		description: "故宫和天安门...",
+		link: `${baseURL}北京/北京_故宫${item}.jpg`,
+	})),
+  numGenerator(1, 3).map((item) => ({
+		title: "八达岭",
+		description: "八达岭长城+熊",
+		link: `${baseURL}北京/北京_故宫${item}.jpg`,
+	})),
+];
+console.log(beijing);
+
 </script>

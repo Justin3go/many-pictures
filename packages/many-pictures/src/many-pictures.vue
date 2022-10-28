@@ -93,12 +93,12 @@ onMounted(() => {
 		function lazyLoad() {
 			const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
 			const winHeight = window.innerHeight;
-
+			
 			if (img && img.offsetTop < scrollTop + winHeight) {
 				isLoad.value = true;
 			}
 		}
-		window.onscroll = throttle.bind(this, lazyLoad, 500);
+		window.onscroll = throttle(lazyLoad, 500);
 		window.onload = lazyLoad; // 加载已在屏幕中的图片
 	}
 });

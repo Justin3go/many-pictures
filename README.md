@@ -12,6 +12,8 @@
 
 具体效果可以参考下面的图片或者直接点开我的个人博客/图集中查看
 
+![ScreenRecorderProject1](C:\Users\21974\Desktop\ScreenRecorderProject1.gif)
+
 <img src="https://oss.justin3go.com/photography/image-20221026171605581.png" alt="image-20221026171605581" style="zoom:67%;" />
 
 <img src="https://oss.justin3go.com/photography/image-20221026171632239.png" alt="image-20221026171632239" style="zoom: 67%;" />

@@ -22,13 +22,22 @@ importers:
     specifiers:
       many-pictures: workspace:^1.0.0
     dependencies:
-      many-pictures: link:../packages/many-pictures
+      many-pictures: link:../packages/many-pictures/many-pictures
 
   packages/many-pictures:
     specifiers:
-      '@many-pictures/utils': workspace:^1.0.0
+      '@many-pictures/utils': workspace:^1.0.1
     dependencies:
       '@many-pictures/utils': link:../utils
+
+  packages/many-pictures/many-pictures:
+    specifiers:
+      '@many-pictures/utils': workspace:^1.0.1
+    dependencies:
+      '@many-pictures/utils': link:../../utils
+
+  packages/utils:
+    specifiers: {}
 
 packages:
 
