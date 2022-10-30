@@ -8,17 +8,17 @@
 
 + 支持不同数量的图片容纳
 + 支持大图预览
-+ 支持懒加载
++ 支持自适应懒加载（横向竖向滚动，通过`IntersectionObserver`api实现，有兼容问题的话请设置`lazy: false`）
 
-具体效果可以参考下面的图片或者直接点开我的个人博客/图集中查看
+具体效果可以参考下面的图片或者直接点开我的[个人博客/图集](https://justin3go.com/%E5%9B%BE%E9%9B%86/%E6%A0%A1%E5%9B%AD.html)中查看
 
-![ScreenRecorderProject1](C:\Users\21974\Desktop\ScreenRecorderProject1.gif)
+![demo-many-pictures](https://oss.justin3go.com/blogs/demo-many-pictures.gif)
 
-<img src="https://oss.justin3go.com/photography/image-20221026171605581.png" alt="image-20221026171605581" style="zoom:67%;" />
+![image-20221030220010738](https://oss.justin3go.com/blogs/image-20221030220010738.png)
 
-<img src="https://oss.justin3go.com/photography/image-20221026171632239.png" alt="image-20221026171632239" style="zoom: 67%;" />
+![image-20221030220031914](https://oss.justin3go.com/blogs/image-20221030220031914.png)
 
-<img src="https://oss.justin3go.com/photography/image-20221026171712830.png" alt="image-20221026171712830" style="zoom: 33%;" />
+![image-20221030220050169](https://oss.justin3go.com/blogs/image-20221030220050169.png)
 
 ## 使用
 
@@ -181,6 +181,21 @@ interface configI {
 	zIndex: number; // 大图展示的层级 默认背景为100，展示的图片为zIndex+1
 }
 ```
+
+背景图的颜色我也暴露了出来：
+
+```css
+--many-img-bg-color
+// 背景颜色使用的是上述变量，你可以在:root中定义该变量
+// 比如在vitepress中想要兼容切换明暗模式就这样 
+```
+
+![image-20221030221955576](https://oss.justin3go.com/blogs/image-20221030221955576.png)
+
+## TODO 
+
+- 优化多个组件同时显示造成的卡顿
+- 增加loading动画或者骨架图优化体验
 
 ## 感谢
 

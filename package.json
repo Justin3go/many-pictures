@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "pnpm run --filter ./packages/many-pictures build",
+    "publish": "pnpm --filter ./packages/many-pictures/many-pictures publish --access public",
+    "patch": "pnpm --filter ./packages/many-pictures/many-pictures version patch",
+    "minor": "pnpm --filter ./packages/many-pictures/many-pictures version minor",
+    "example": "pnpm run --filter ./example dev",
+    "build:util": "pnpm run --filter ./packages/utils build"
   },
   "keywords": [],
   "author": "",
