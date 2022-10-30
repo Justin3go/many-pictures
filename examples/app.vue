@@ -1,7 +1,9 @@
 <template>
 	<div class="demo" style="height: 900px"></div>
 	<div>
-		<many-pictures :srcImgs="beijing[0]" :lazy="true" />
+		<many-pictures :srcImgs="beijing[0]" :lazy="false" />
+		<many-pictures :srcImgs="beijing[1]" :lazy="true" />
+		<many-pictures :srcImgs="beijing[2]" :lazy="true" />
 	</div>
 </template>
 <script lang="ts" setup>

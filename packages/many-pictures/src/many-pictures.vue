@@ -1,14 +1,12 @@
 <template>
-	<div class="many-pictures" ref="curComponent">
-		<!-- 懒加载计算高度 -->
-		<img src="" alt="" />
+	<div class="many-pictures" ref="mark">
 		<div class="container">
 			<div class="options">
 				<div
-					v-for="(item, index) in allImgs"
+					v-for="(item, index) in props.srcImgs"
 					class="option"
 					:class="{ active: index === defaultActive }"
-					:style="{ backgroundImage: `url(${item.link})` }"
+					:data-img="item.link"
 					@click="handleClick(index)"
 				>
 					<div class="shadow"></div>
@@ -37,7 +35,6 @@ export default {
 <script lang="ts" setup>
 import { ref, computed, onMounted } from "vue";
 import picViewer from "./pic-viewer.vue";
-import { throttle } from "@many-pictures/utils";
 // import { propsI, srcImgsItemI } from "./types/many-pictures";
 // vue3 现在还不支持复杂的类型和从其他文件进行类型导入，但我们有计划在将来支持。
 // TODO 后续vue支持导入外部文件后这边再切换
@@ -78,28 +75,48 @@ const finalActiveWidth = activeWidth + "px";
 const finalNoActiveWidth = noActiveWidth + "px";
 const optionsWidth = (props.srcImgs.length - 1) * (noActiveWidth + 2 * margin) + (activeWidth + 2 * margin) + "px";
 // 初始
-const curComponent = ref();
+const mark = ref();
 const defaultActive = ref(0);
 const isLoad = ref(!props.lazy);
 let isShowImageViewer = ref(false);
 let prevOverflow = "";
 // 图片链接，区分是否懒加载
-const allImgs = computed((): srcImgsItemI[] => (isLoad.value ? props.srcImgs : []));
 const curImg = computed((): string => (isLoad.value ? props.srcImgs[defaultActive.value]?.link : ""));
 onMounted(() => {
 	if (props.lazy) {
-		const img = curComponent.value.querySelector("img");
-
-		function lazyLoad() {
-			const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-			const winHeight = window.innerHeight;
-			
-			if (img && img.offsetTop < scrollTop + winHeight) {
-				isLoad.value = true;
+		const ioImg = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.intersectionRatio <= 0) return;
+					const option = entry.target;
+					const imgUrl = option.getAttribute("data-img");
+					option.setAttribute("style", `background-image: url(${imgUrl})`);
+					ioImg.unobserve(option);
+				});
+			},
+			{
+				root: mark.value, // 横向懒加载
 			}
-		}
-		window.onscroll = throttle(lazyLoad, 500);
-		window.onload = lazyLoad; // 加载已在屏幕中的图片
+		);
+		const ioContainer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.intersectionRatio <= 0) return;
+				const container = entry.target;
+				const list = container.querySelectorAll(".option");
+				list.forEach((item) => {
+					ioImg.observe(item);
+				});
+				isLoad.value = true;
+				ioContainer.unobserve(container);
+			});
+		});
+		ioContainer.observe(mark.value);
+	} else {
+		const list: NodeListOf<Element> = mark.value.querySelectorAll(".option");
+		list.forEach((item) => {
+			const imgUrl = item.getAttribute("data-img");
+			item.setAttribute("style", `background-image: url(${imgUrl})`);
+		});
 	}
 });
 
